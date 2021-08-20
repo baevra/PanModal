@@ -109,6 +109,9 @@ extension PanModalPresentable where Self: UIViewController {
     }
 
     private var rootViewController: UIViewController? {
+        if let navigationController = presentingViewController as? UINavigationController {
+          return navigationController.visibleViewController
+        }
         return presentingViewController
     }
 
