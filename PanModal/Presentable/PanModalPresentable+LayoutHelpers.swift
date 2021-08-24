@@ -26,21 +26,33 @@ extension PanModalPresentable where Self: UIViewController {
      Length of the top layout guide of the presenting view controller.
      Gives us the safe area inset from the top.
      */
-    var topLayoutOffset: CGFloat {
+    public var topLayoutOffset: CGFloat {
 
-        guard let rootVC = rootViewController
+        guard let rootVC = presentingRootViewController
             else { return 0}
 
-        if #available(iOS 11.0, *) { return rootVC.view.safeAreaInsets.top } else { return rootVC.topLayoutGuide.length }
+      guard let window = view.window else {
+        if #available(iOS 11.0, *) {
+          return rootVC.view.safeAreaInsets.top
+        } else {
+          return rootVC.topLayoutGuide.length
+        }
+      }
+
+      if #available(iOS 11.0, *) {
+        return window.safeAreaInsets.top
+      } else {
+        return window.rootViewController?.topLayoutGuide.length ?? 0.0
+      }
     }
 
     /**
      Length of the bottom layout guide of the presenting view controller.
      Gives us the safe area inset from the bottom.
      */
-    var bottomLayoutOffset: CGFloat {
+    public var bottomLayoutOffset: CGFloat {
 
-       guard let rootVC = rootViewController
+       guard let rootVC = presentingRootViewController
             else { return 0}
 
         if #available(iOS 11.0, *) { return rootVC.view.safeAreaInsets.bottom } else { return rootVC.bottomLayoutGuide.length }
@@ -108,12 +120,12 @@ extension PanModalPresentable where Self: UIViewController {
         }
     }
 
-    private var rootViewController: UIViewController? {
-        if let navigationController = presentingViewController as? UINavigationController {
+    public var presentingRootViewController: UIViewController? {
+        let windowRootViewController = view.window?.rootViewController
+        if let navigationController = windowRootViewController as? UINavigationController {
           return navigationController.topViewController
         }
-        return presentingViewController
+        return windowRootViewController
     }
-
 }
 #endif

@@ -449,32 +449,31 @@ private extension PanModalPresentationController {
      Configures the scroll view insets
      */
     func configureScrollViewInsets() {
-
-        guard
-            let scrollView = presentable?.panScrollable,
-            !scrollView.isScrolling
-            else { return }
-
-        /**
-         Disable vertical scroll indicator until we start to scroll
-         to avoid visual bugs
-         */
-        scrollView.showsVerticalScrollIndicator = false
-        scrollView.scrollIndicatorInsets = presentable?.scrollIndicatorInsets ?? .zero
-
-        /**
-         Set the appropriate contentInset as the configuration within this class
-         offsets it
-         */
-        scrollView.contentInset.bottom = presentingViewController.bottomLayoutGuide.length
-
-        /**
-         As we adjust the bounds during `handleScrollViewTopBounce`
-         we should assume that contentInsetAdjustmentBehavior will not be correct
-         */
-        if #available(iOS 11.0, *) {
-            scrollView.contentInsetAdjustmentBehavior = .never
-        }
+//        guard
+//            let scrollView = presentable?.panScrollable,
+//            !scrollView.isScrolling
+//            else { return }
+//
+//        /**
+//         Disable vertical scroll indicator until we start to scroll
+//         to avoid visual bugs
+//         */
+//        scrollView.showsVerticalScrollIndicator = false
+//        scrollView.scrollIndicatorInsets = presentable?.scrollIndicatorInsets ?? .zero
+//
+//        /**
+//         Set the appropriate contentInset as the configuration within this class
+//         offsets it
+//         */
+//        scrollView.contentInset.bottom = presentingViewController.bottomLayoutGuide.length
+//
+//        /**
+//         As we adjust the bounds during `handleScrollViewTopBounce`
+//         we should assume that contentInsetAdjustmentBehavior will not be correct
+//         */
+//        if #available(iOS 11.0, *) {
+//            scrollView.contentInsetAdjustmentBehavior = .never
+//        }
     }
 
 }
